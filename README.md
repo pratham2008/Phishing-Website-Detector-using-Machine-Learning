@@ -33,7 +33,7 @@ pip (Python package installer)
 First, clone the project from your GitHub repository to your local machine.
 
 # Replace 'your-username' with your actual GitHub username
-git clone [https://github.com/your-username/phishingdetection.git]([https://github.com/your-username/phishingdetection.git](https://github.com/pratham2008/Phishing-Website-Detector-using-Machine-Learning.git))
+git clone [https://github.com/your-username/phishingdetection.git]((https://github.com/pratham2008/Phishing-Website-Detector-using-Machine-Learning.git))
 cd phishingdetection
 
 2. Install Dependencies
