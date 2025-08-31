@@ -1,5 +1,4 @@
 🛡️ Phishing Website Detector using Machine Learning
-
 A user-friendly web application built with Streamlit that leverages a Random Forest classifier to detect phishing websites in real-time. This project was developed to provide a simple yet effective tool to combat the growing threat of phishing attacks by analyzing various URL features.
 
 
@@ -32,8 +31,7 @@ pip (Python package installer)
 1. Clone the Repository
 First, clone the project from your GitHub repository to your local machine.
 
-# Replace 'your-username' with your actual GitHub username
-git clone [https://github.com/your-username/phishingdetection.git]((https://github.com/pratham2008/Phishing-Website-Detector-using-Machine-Learning.git))
+git clone [https://github.com/pratham2008/Phishing-Website-Detector-using-Machine-Learning.git](https://github.com/pratham2008/Phishing-Website-Detector-using-Machine-Learning.git)
 cd phishingdetection
 
 2. Install Dependencies
