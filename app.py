@@ -12,7 +12,7 @@ st.set_page_config(
     page_title="Phishing Website Detector",
     page_icon="🛡️",
     layout="centered",
-    initial_sidebar_state="auto"
+    initial_sidebar_state="expanded"
 )
 
 # ╔══════════════════════════════════════════════════════════════════╗
@@ -73,8 +73,8 @@ THEME_CSS = """
     h1 { font-weight: 700 !important; letter-spacing: -0.025em !important; color: var(--foreground) !important; }
     h2, h3 { font-weight: 600 !important; letter-spacing: -0.015em !important; color: var(--foreground) !important; }
 
-    /* ===== Hide Streamlit Chrome ===== */
-    #MainMenu, footer, header { visibility: hidden !important; }
+    /* ===== Hide Streamlit Branding (keep header for sidebar toggle) ===== */
+    #MainMenu, footer { visibility: hidden !important; }
     [data-testid="stHeader"] { background-color: transparent !important; }
 
     /* ===== Divider ===== */
