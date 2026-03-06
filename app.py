@@ -4,6 +4,8 @@ import numpy as np
 import re
 import urllib.parse as urlparse
 import time
+import pandas as pd
+from datetime import datetime
 
 # --- Page Configuration ---
 st.set_page_config(
@@ -27,6 +29,30 @@ def load_model():
         return None
 
 model = load_model()
+
+# --- Session State Initialization for Analytics ---
+if "scan_history" not in st.session_state:
+    st.session_state.scan_history = []  # list of dicts
+if "total_scans" not in st.session_state:
+    st.session_state.total_scans = 0
+if "phishing_count" not in st.session_state:
+    st.session_state.phishing_count = 0
+if "safe_count" not in st.session_state:
+    st.session_state.safe_count = 0
+
+def record_scan(url, result_label):
+    """Records a scan result into session state analytics."""
+    st.session_state.total_scans += 1
+    if result_label == "Phishing":
+        st.session_state.phishing_count += 1
+    else:
+        st.session_state.safe_count += 1
+    st.session_state.scan_history.append({
+        "#": st.session_state.total_scans,
+        "URL": url if len(url) <= 60 else url[:57] + "...",
+        "Result": result_label,
+        "Time": datetime.now().strftime("%I:%M:%S %p"),
+    })
 
 # --- Feature Extraction Logic (30 Features) ---
 def extract_features(url):
@@ -117,12 +143,61 @@ else:
                 if prediction[0] == -1:
                     st.success("✅ This URL appears to be **Legitimate**.", icon="👍")
                     st.balloons()
+                    record_scan(url_input, "Legitimate")
                 else:
                     st.error("⚠️ This URL is likely a **Phishing** attempt.", icon="🚨")
                     st.warning("Please be cautious. Avoid entering any personal or financial information on this site.")
+                    record_scan(url_input, "Phishing")
 
             except Exception as e:
                 st.error(f"An error occurred during analysis: {e}")
         else:
             st.warning("Please enter a URL to analyze.", icon="❗")
+
+
+# --- Analytics Sidebar ---
+with st.sidebar:
+    st.header("📊 Analytics Dashboard")
+    st.caption("Real-time session statistics")
+    st.write("---")
+
+    # --- Key Metrics ---
+    col1, col2 = st.columns(2)
+    col1.metric("Total Scans", st.session_state.total_scans)
+    col2.metric(
+        "Threat Rate",
+        f"{(st.session_state.phishing_count / st.session_state.total_scans * 100):.0f}%"
+        if st.session_state.total_scans > 0 else "—",
+    )
+
+    col3, col4 = st.columns(2)
+    col3.metric("✅ Safe", st.session_state.safe_count)
+    col4.metric("🚨 Phishing", st.session_state.phishing_count)
+
+    st.write("---")
+
+    # --- Pie Chart ---
+    if st.session_state.total_scans > 0:
+        st.subheader("Result Breakdown")
+        chart_data = pd.DataFrame(
+            {"Count": [st.session_state.safe_count, st.session_state.phishing_count]},
+            index=["Legitimate", "Phishing"],
+        )
+        st.bar_chart(chart_data, color=["#2ecc71"])
+    else:
+        st.info("Scan some URLs to see chart data.", icon="💡")
+
+    st.write("---")
+
+    # --- Scan History Table ---
+    st.subheader("🕰️ Scan History")
+    if st.session_state.scan_history:
+        history_df = pd.DataFrame(st.session_state.scan_history)
+        st.dataframe(
+            history_df,
+            use_container_width=True,
+            hide_index=True,
+        )
+    else:
+        st.caption("No scans yet. Analyze a URL to begin.")
 
