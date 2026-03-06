@@ -66,8 +66,13 @@ THEME_CSS = """
     }
 
     /* ===== Typography ===== */
-    h1, h2, h3, h4, h5, h6, p, span, label, div, li, td, th, input, button, textarea {
+    h1, h2, h3, h4, h5, h6, p, label, div, li, td, th, input, button, textarea {
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+    }
+
+    /* Restore Material Symbols font for Streamlit icons */
+    .material-symbols-rounded {
+        font-family: 'Material Symbols Rounded' !important;
     }
 
     h1 { font-weight: 700 !important; letter-spacing: -0.025em !important; color: var(--foreground) !important; }
