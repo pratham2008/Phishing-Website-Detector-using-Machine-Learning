@@ -212,6 +212,23 @@ THEME_CSS = """
         border: 1px solid var(--border) !important;
     }
 
+    /* Cross-browser fix: ensure info alert text is always visible */
+    [data-testid="stAlert"] p,
+    [data-testid="stAlert"] div {
+        color: #0a0a0a !important;
+    }
+
+    /* Info alert specific styling for consistent rendering across browsers */
+    [data-testid="stSidebar"] [data-testid="stAlert"] {
+        background-color: #eff6ff !important;
+        border: 1px solid #bfdbfe !important;
+        color: #1e3a5f !important;
+    }
+
+    [data-testid="stSidebar"] [data-testid="stAlert"] p {
+        color: #1e3a5f !important;
+    }
+
     /* ─────────────────────────────────────────────
        DATAFRAME / TABLE
     ───────────────────────────────────────────── */
