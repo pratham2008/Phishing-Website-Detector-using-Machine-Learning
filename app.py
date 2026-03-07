@@ -86,18 +86,23 @@ THEME_CSS = """
     hr { border-color: var(--border) !important; opacity: 0.5 !important; }
 
     /* ─────────────────────────────────────────────
-       SIDEBAR TOGGLE (Hamburger & Close icons)
+       SIDEBAR TOGGLE (Collapse & Expand buttons)
     ───────────────────────────────────────────── */
-    button[kind="header"] {
-        color: #0a0a0a !important; /* Make toggle icon black */
-    }
-    
-    [data-testid="collapsedControl"] {
+    [data-testid="stSidebarCollapseButton"] button,
+    [data-testid="stExpandSidebarButton"] button {
         color: #0a0a0a !important;
+    }
+
+    [data-testid="stSidebarCollapseButton"] [data-testid="stIconMaterial"],
+    [data-testid="stExpandSidebarButton"] [data-testid="stIconMaterial"] {
+        color: #0a0a0a !important;
+    }
+
+    [data-testid="stExpandSidebarButton"] {
         background-color: var(--background) !important;
-        border-radius: 50% !important;
-        box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1) !important;
         border: 1px solid var(--border) !important;
+        border-radius: 0.5rem !important;
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,0.08) !important;
     }
 
     [data-testid="stSidebar"] {
