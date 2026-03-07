@@ -86,8 +86,20 @@ THEME_CSS = """
     hr { border-color: var(--border) !important; opacity: 0.5 !important; }
 
     /* ─────────────────────────────────────────────
-       SIDEBAR
+       SIDEBAR TOGGLE (Hamburger & Close icons)
     ───────────────────────────────────────────── */
+    button[kind="header"] {
+        color: #0a0a0a !important; /* Make toggle icon black */
+    }
+    
+    [data-testid="collapsedControl"] {
+        color: #0a0a0a !important;
+        background-color: var(--background) !important;
+        border-radius: 50% !important;
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1) !important;
+        border: 1px solid var(--border) !important;
+    }
+
     [data-testid="stSidebar"] {
         background-color: #fafafa !important;
         border-right: 1px solid var(--border) !important;
@@ -644,11 +656,13 @@ with st.sidebar:
         unsafe_allow_html=True
     )
     if st.session_state.total_scans > 0:
-        chart_data = pd.DataFrame(
-            {"Count": [st.session_state.safe_count, st.session_state.phishing_count]},
-            index=["Legitimate", "Phishing"],
-        )
-        st.bar_chart(chart_data, color=["#2ecc71"])
+        # Create DataFrame without a custom index so it defaults to 0, 1, ...
+        # and explicitly use columns "Category" and "Count" for cleaner table viewing
+        chart_data = pd.DataFrame({
+            "Category": ["Legitimate", "Phishing"],
+            "Count": [st.session_state.safe_count, st.session_state.phishing_count]
+        })
+        st.bar_chart(chart_data, x="Category", y="Count", color=["#2ecc71"])
     else:
         st.info("Scan some URLs to see chart data.", icon="💡")
 
